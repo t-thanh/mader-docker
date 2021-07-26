@@ -17,7 +17,7 @@ RUN chown ${uid}:${gid} -R /home/docker
 USER docker
 WORKDIR /home/docker
 RUN /bin/bash -c 'sudo apt-get update && sudo apt-get install -y libarmadillo-dev ros-melodic-nlopt libdw-dev git && \
-	cd ~/ && mkdir ws && cd ws && mkdir src && cd src && git clone hhttps://github.com/t-thanh/mader-docker.git && \
+	cd ~/ && mkdir ws && cd ws && mkdir src && cd src && git clone https://github.com/t-thanh/mader-docker.git && \
 	mkdir -p ~/installations/nlopt && cd ~/installations/nlopt && \
 	wget https://github.com/stevengj/nlopt/archive/v2.6.2.tar.gz && tar -zxvf v2.6.2.tar.gz && \
 	cd nlopt-2.6.2/ && cmake . && make && sudo make install && \
@@ -26,7 +26,8 @@ RUN /bin/bash -c 'sudo apt-get update && sudo apt-get install -y libarmadillo-de
 	wget https://github.com/CGAL/cgal/releases/download/releases%2FCGAL-4.14.2/CGAL-4.14.2.tar.xz && \
 	tar -xf CGAL-4.14.2.tar.xz && cd CGAL-4.14.2/ && cmake . -DCMAKE_BUILD_TYPE=Release && sudo make install && \
 	sudo apt-get install python-catkin-tools -y && \
-	cd ~/ws/src/mader-docker && git submodule init && git submodule update && cd ../../ && \
+	cd ~/ws/src/mader-docker && git submodule init && git submodule update && cd ../../ && \ 
+	source /opt/ros/melodic/setup.bash && \
 	rosdep update && rosdep install --from-paths src --ignore-src -r -y && \
 	catkin config -DCMAKE_BUILD_TYPE=Release && \
 	catkin build'
